@@ -4,14 +4,17 @@ class Security{
 
     private $_capability;
     private $_nonce;
-    private $_action;
 
     public $success = false;
 
     /**
      *
      */
-    public function __construct(){}
+    public function __construct( $nonce, $capability = null){
+
+        $this->_nonce = $nonce;
+        $this->_capability = $capability;
+    }
 
 
     /**
@@ -39,25 +42,4 @@ class Security{
         return $this->success = true;
     }
 
-
-    /**
-     *
-     */
-    public function set_capability( $capability ) {
-        $this->_capability = $capability;
-    }
-
-    /**
-     *
-     */
-    public function set_action( $action ) {
-        $this->_action = $action;
-    }
-
-    /**
-     *
-     */
-    public function set_nonce( $nonce ) {
-        $this->_nonce = $nonce;
-    }
 }
