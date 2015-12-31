@@ -13,15 +13,11 @@ class WPAjaxRequest{
      */
     public function __construct( $args = array(), Security $security, DataHandler $data_handler ){
 
-        $this->args = $this->set_arguments( $args );
-        $this->add_actions();
-
         $this->_security = $security;
         $this->_data_handler = $data_handler;
 
-        $this->_security->set_action( $this->args['action'] );
-        $this->_security->set_nonce( $this->args['nonce'] );
-        $this->_security->set_capability( $this->args['capability']);
+        $this->args = $this->set_arguments( $args );
+        $this->add_actions();
     }
 
     /**
@@ -31,8 +27,6 @@ class WPAjaxRequest{
 
         $defaults = array(
             'action'     => '',
-            'capability' => 'manage_options',
-            'nonce'      => '',
             'callback'   => '',
         );
 
@@ -59,24 +53,9 @@ class WPAjaxRequest{
      */
     public function request_handler(){
 
-        $arr = array();
-
         if( $this->_security->check() ){
 
-            if( isset( $_POST['data'] ) ) {
-                wp_parse_str( $_POST['data'], $arr );
-            }
-
-            $this->_data_handler->set_data( $arr );
-            $this->_data_handler->add_data( array(
-                'success' => true,
-            ));
-
-            // fire users callback
-            do_action('wpajaxrequest_callback_' . $this->args['action'], $this->_data_handler->load_output() );
-
-            if( $this->args['callback'] === '' ) echo $this->_data_handler->load_output();
-
+            $this->do_callback();
             return;
 
         } else {
@@ -87,8 +66,27 @@ class WPAjaxRequest{
             ));
 
             return $this->_data_handler->load_output();
-
         }
+    }
+
+    /**
+     *
+     */
+    public function do_callback(){
+
+        $posted = array();
+
+        if( isset( $_POST['data'] ) ){
+            wp_parse_str( $_POST['data'], $posted );
+        }
+
+        $this->_data_handler->set_data( $posted );
+        $this->_data_handler->add_data( array('success' => true) );
+
+        // Users Callback
+        do_action('wpajaxrequest_callback_' . $this->args['action'], $this->_data_handler->load_output() );
+
+        if( $this->args['callback'] === '' ) echo $this->_data_handler->load_output();
     }
 
 
