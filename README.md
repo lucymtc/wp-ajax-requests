@@ -21,7 +21,7 @@ require_once plugin_dir_path( __FILE__ ) . 'wp-ajax-requests/vendor/autoload.php
 function add_requests() {
 
     $security = new Security( 'my_nonce', 'manage_options' );
-    $data_handler = new DataHandler( new WPAjax\Output\Json() );
+    $data_handler = new DataHandler( new Json() );
 
      $args = array(
         'action'     => 'my_action',
