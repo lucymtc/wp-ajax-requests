@@ -20,15 +20,15 @@ require_once plugin_dir_path( __FILE__ ) . 'wp-ajax-requests/vendor/autoload.php
 ```
 function add_requests() {
 
-    $security = new WPAjax\Security( 'my_nonce', 'manage_options' );
-    $data_handler = new WPAjax\DataHandler( new WPAjax\Output\Json() );
+    $security = new Security( 'my_nonce', 'manage_options' );
+    $data_handler = new DataHandler( new WPAjax\Output\Json() );
 
      $args = array(
         'action'     => 'my_action',
         'callback'   => 'my_callback',
         );
 
-    new WPAjax\WPAjaxRequest( $args, $security, $data_handler);
+    new WPAjaxRequest( $args, $security, $data_handler);
 }
 ```
 
