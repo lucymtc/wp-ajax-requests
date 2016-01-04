@@ -49,7 +49,8 @@ class WPAjaxRequest{
     }
 
     /**
-     * @todo  handle error messages
+     * Calls security chheck method and  fires user's callback function if success
+     * @return void
      */
     public function request_handler(){
 
@@ -60,18 +61,14 @@ class WPAjaxRequest{
 
         } else {
 
-            $this->_data_handler->add_data( array(
-                'success' => false,
-                'error_message' => 'no no no',
-            ));
-
-            return $this->_data_handler->load_output();
+            echo $this->_security->get_error();
         }
     }
 
-    /**
-     *
-     */
+
+   /**
+    * Adds the hook action to run users callback returning the data.
+    */
     public function do_callback(){
 
         $posted = array();
