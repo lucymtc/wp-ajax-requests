@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Responsable for security checks
+ */
+
+if( ! class_exists( 'Security' )){
+
 class Security{
 
     private $_capability;
@@ -39,7 +45,7 @@ class Security{
         }
 
         /////
-        if ( $this->_nonce != null && ! check_ajax_referer( $this->_nonce, 'nonce', false) ) {
+        if ( ! check_ajax_referer( $this->_nonce, 'nonce', false) ) {
             $this->_result->message = 'Nonce verification failed';
             return false;
         }
@@ -54,4 +60,5 @@ class Security{
         return wp_send_json_error($this->_result);
     }
 
+}
 }

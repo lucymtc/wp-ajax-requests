@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Handles the data and.
+ * Dependency on Output Interface
+ *
+ * @todo  add dependency of Sanitation object responsable of sanitating data
+ */
+
+if( ! class_exists( 'DataHandler' )){
+
 class DataHandler{
 
     public $data;
@@ -48,5 +57,7 @@ class DataHandler{
     }
 
 
+
+}
 
 }
