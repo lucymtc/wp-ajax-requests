@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Object request handler.
+ * Dependencies on Security and DataHanlder.
+ */
+
+if( ! class_exists( 'WPAjaxRequest' )){
 
 class WPAjaxRequest{
 
@@ -11,26 +17,14 @@ class WPAjaxRequest{
     /**
      *
      */
-    public function __construct( $args = array(), Security $security, DataHandler $data_handler ){
+    public function __construct( $action = '', $callback = '', Security $security, DataHandler $data_handler ){
 
+        $this->_action = $action;
+        $this->_callback = $callback;
         $this->_security = $security;
         $this->_data_handler = $data_handler;
 
-        $this->args = $this->set_arguments( $args );
         $this->add_actions();
-    }
-
-    /**
-     *
-     */
-    private function set_arguments( $args ){
-
-        $defaults = array(
-            'action'     => '',
-            'callback'   => '',
-        );
-
-        return wp_parse_args( $args, $defaults);
     }
 
     /**
@@ -38,12 +32,12 @@ class WPAjaxRequest{
      */
     public function add_actions(){
 
-        if( $this->args['callback'] != '') {
-            add_action( 'wpajaxrequest_callback_' . $this->args['action'] , $this->args['callback'] );
+        if( $this->_callback != '') {
+            add_action( 'wpajaxrequest_callback_' . $this->_action , $this->_callback );
         }
 
-        if( $this->args['action'] != '') {
-            add_action( 'wp_ajax_' . $this->args['action'] , array( $this, 'request_handler') );
+        if( $this->_action != '') {
+            add_action( 'wp_ajax_' . $this->_action , array( $this, 'request_handler') );
         }
 
     }
@@ -68,24 +62,25 @@ class WPAjaxRequest{
 
    /**
     * Adds the hook action to run users callback returning the data.
+    * @todo  $data should be a sanitated data (from DataHandler) instead of directly $_POST['data'].
     */
     public function do_callback(){
 
         $posted = array();
+        $data = maybe_serialize( $_POST['data'] );
 
-        if( isset( $_POST['data'] ) ){
-            wp_parse_str( $_POST['data'], $posted );
+        if( isset( $data ) ){
+            wp_parse_str( $data, $posted );
         }
 
         $this->_data_handler->set_data( $posted );
         $this->_data_handler->add_data( array('success' => true) );
 
         // Users Callback
-        do_action('wpajaxrequest_callback_' . $this->args['action'], $this->_data_handler->load_output() );
+        do_action('wpajaxrequest_callback_' . $this->_action, $this->_data_handler->load_output() );
 
-        if( $this->args['callback'] === '' ) echo $this->_data_handler->load_output();
+        if( $this->_callback === '' ) echo $this->_data_handler->load_output();
     }
-
-
+}
 
 }
