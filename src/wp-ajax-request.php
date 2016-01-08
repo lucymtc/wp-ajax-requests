@@ -51,12 +51,13 @@ class WPAjaxRequest{
         if( $this->_security->check() ){
 
             $this->do_callback();
-            return;
-
+            
         } else {
 
             echo $this->_security->get_error();
         }
+
+        wp_die();
     }
 
 
