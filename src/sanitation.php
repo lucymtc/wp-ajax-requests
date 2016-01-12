@@ -1,5 +1,5 @@
 <?php
 /**
  * @todo  Satitation class
- * Responsable of sanitating data
+ * Responsable of data sanitation, parameters passed by user
  */

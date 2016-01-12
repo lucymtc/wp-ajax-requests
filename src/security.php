@@ -60,5 +60,12 @@ class Security{
         return wp_send_json_error($this->_result);
     }
 
+     /**
+     * @return nonce
+     */
+    public function get_nonce(){
+        return $this->_nonce;
+    }
+
 }
 }
