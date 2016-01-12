@@ -7,13 +7,14 @@ var WPAjaxRequest = function( options ) {
 
 	this.options = jQuery.extend({
 		action: '',
-		success: this.success,
-		error: this.error,
 		type: 'POST',
 		dataType: 'json',
 		url: ajaxurl,
-		nonce: ''
+		nonce: '',
+		success: this.success,
+		error: this.error
 	}, options);
+
 }
 
 /**
@@ -23,18 +24,17 @@ var WPAjaxRequest = function( options ) {
 WPAjaxRequest.prototype.send = function( data ) {
 
 	jQuery.ajax({
-     	url: this.options.url,
-        type: this.options.type,
-        dataType: this.options.dataType,
-        data: {
-        	data: data,
-            action : this.options.action,
-            nonce : wpar.nonces[ this.options.nonce ]
-		},
-        success: this.options.success,
-        error: this.options.error
-      });
-
+			url: this.options.url,
+			type: this.options.type,
+			dataType: this.options.dataType,
+			data: {
+				data: data,
+				action : this.options.action,
+				nonce : wpar.nonces[ this.options.nonce ]
+				},
+			success: this.options.success,
+			error: this.options.error
+		});
 }
 
 /**
@@ -42,9 +42,8 @@ WPAjaxRequest.prototype.send = function( data ) {
  * @return void
  */
 WPAjaxRequest.prototype.success = function( response ) {
-
-	console.log( response );
-    return;
+	console.log(response);
+	return;
 }
 
 
@@ -53,7 +52,6 @@ WPAjaxRequest.prototype.success = function( response ) {
  * @return void
  */
 WPAjaxRequest.prototype.error = function( response ) {
-
-	console.log( response );
-    return;
+	console.log(response);
+	return;
 }
