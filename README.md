@@ -66,47 +66,60 @@ myForm.on('submit', function(event){
 The arguments and it's defaults when calling `wpar_request()`:
 
 ```php
-$defaults = array(
+ $defaults = array(
 
-	// Required. The action name to create the custom handler for the wordpress hook.
-	// wp_ajax_(action), wp_ajax_nonpriv_(action)
+        /**
+         * Required. The action name to create the custom handler for the wordpress hook.
+         * wp_ajax_(action), wp_ajax_nonpriv_(action)
+         */
+        'action' => '',
 
-	'action' => '',
+        /**
+         * Callback function defined by the user to run if the request
+         * is valid and passes the security checks.
+         */
+        'callback' => '',
 
-	// Callback function defined by the user to run if the request is valid and passes the security checks.
+        /**
+         * Action name to create the nonce wp_create_nonce().
+         * Security checks will run against this name.
+         * If left as null, the nonce verification won't take place.
+         */
+        'nonce' => null,
 
-	'callback' => '',
+        /**
+         * Security checks will run against this capability. For example: manage_options
+         */
+        'capability' => null,
 
-	// Action name to create the nonce wp_create_nonce().
-	// Security checks will run against this name.
-	// If left as null, the nonce verification won't take place.
+        /**
+         * Data output format. Possible values Json, SerializedArra, XML.
+         */
+        'output' => 'Json',
 
-	'nonce' => null,
+        /**
+         * If set to false, the support for the front end will not be used.
+         * The user will need to enqueue scripts and send request manually.
+         */
+        'use_front' => true,
 
-	// Security checks will run against this capability. For example: manage_options
+        /**
+         * Name used as a handle for the script in wp_enqueue_script()
+         */
+        'front_script_handle' => 'wpajaxrequest-script',
 
-	'capability' => null,
+        /**
+         * You may replace the script responsible to send the request by changing
+         * the default path to your own script.
+         */
+        'front_script_src' => home_url( str_replace( ABSPATH, '', __DIR__ . '/js/wp-ajax-request.js') ),
 
-	// Data output format. Possible values Json, SerializedArra, XML.
+        /**
+         * The name of the variable which will contain the data for wp_localize_script().
+         */
+        'localize_name' => 'wpar',
 
-	'output' => 'Json',
-
-	// If set to false, the support for the front end will not be used.
-	// The user will need to enqueue scripts and send request manually.
-
-	'use_front' => true,
-
-	// Name used as a handle for the script in wp_enqueue_script()
-
-	'front_script_handle' => 'wpajaxrequest-script',
-
-	// You may replace the script responsible to send the request by changing the default path to your own script.
-
-	'front_script_src' => home_url( str_replace( ABSPATH, '', __DIR__ . '/js/wp-ajax-request.js') ),
-
-	// The name of the variable which will contain the data for wp_localize_script().
-
-	'localize_name' => 'wpar',
+    );
 );
 ```
 ### Options JS
@@ -114,36 +127,43 @@ $defaults = array(
 The options and it's defaults for the JavaScript object `WPAjaxRequest()`:
 
 ```javascript
-// Required. The action name to create the custom handler for the wordpress hook.
-// Same action name defined before.
-// wp_ajax_(action), wp_ajax_nonpriv_(action)
+		/**
+		 * Required. The action name to create the custom handler for the wordpress hook.
+		 * wp_ajax_(action), wp_ajax_nonpriv_(action)
+		 */
+		action: '',
 
-action: '',
+		/**
+		 *Request type. Default POST
+		 */
+		type: 'POST',
 
-// Request type. Default POST
+		/**
+		 * Data type. Default json
+		 */
+		dataType: 'json',
 
-type: 'POST',
+		/**
+		 * URL to send the request. Default the WordPress admin ajax url.
+		 */
+		url: ajaxurl,
 
-// Data type. Default json
+		/**
+		 * Action name to create the nonce wp_create_nonce().
+		 * Security checks will run against this name.
+		 * Same action name defined before. If not needed leave blank.
+		 */
+		nonce: '',
 
-dataType: 'json',
+		/**
+		 * Callback function if success on sending the request.
+		 */
+		success: this.success,
 
-// URL to send the request. Default the WordPress admin ajax url.
-
-url: ajaxurl,
-
-// Action name to create the nonce wp_create_nonce().
-// Security checks will run against this name.
-// Same action name defined before. If not needed leave blank.
-
-nonce: '',
-
-// Callback function if success on sending the request.
-
-success: this.success,
-
-// Callback function if the request faild.
-error: this.error
+		/**
+		 * Callback function if the request faild.
+		 */
+		error: this.error
 ```
 
 
