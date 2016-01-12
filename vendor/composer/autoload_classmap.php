@@ -6,11 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'DataHandler' => $baseDir . '/src/data-handler.php',
-    'Json' => $baseDir . '/src/output/json.php',
-    'OutputInterface' => $baseDir . '/src/output/output-interface.php',
-    'Security' => $baseDir . '/src/security.php',
-    'SerializedArray' => $baseDir . '/src/output/serialized-array.php',
-    'WPAjaxRequest' => $baseDir . '/src/wp-ajax-request.php',
-    'XML' => $baseDir . '/src/output/xml.php',
+    'Data' => $baseDir . '/src/Data.php',
+    'Front' => $baseDir . '/src/Front.php',
+    'FrontHandler' => $baseDir . '/src/___FrontHandler.php',
+    'Json' => $baseDir . '/src/output/Json.php',
+    'OutputInterface' => $baseDir . '/src/OutputInterface.php',
+    'Security' => $baseDir . '/src/Security.php',
+    'SerializedArray' => $baseDir . '/src/output/SerializedArray.php',
+    'WPAjaxRequest' => $baseDir . '/src/WPAjaxRequest.php',
+    'XML' => $baseDir . '/src/output/XML.php',
 );
