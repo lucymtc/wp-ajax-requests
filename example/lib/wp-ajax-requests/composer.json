@@ -1,0 +1,14 @@
+{
+    "name": "lucymtc/wp-ajax-requests",
+    "description": "Library to handle ajax requests made in WordPress",
+    "authors": [
+        {
+            "name": "Lucy Tomas",
+            "email": "lucy.tomas@10up.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": ["src/", "src/output/"]
+    }
+}
