@@ -1,5 +1,5 @@
 # WP Ajax Requests
-Unfinished project.
+
 Helper to handle Ajax requests in WordPress.
 
 ### Features
