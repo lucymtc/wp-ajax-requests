@@ -8,11 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'Data' => $baseDir . '/src/Data.php',
     'Front' => $baseDir . '/src/Front.php',
-    'FrontHandler' => $baseDir . '/src/___FrontHandler.php',
-    'Json' => $baseDir . '/src/output/Json.php',
+    'Handler' => $baseDir . '/src/Handler.php',
+    'Json' => $baseDir . '/src/output/json.php',
     'OutputInterface' => $baseDir . '/src/OutputInterface.php',
     'Security' => $baseDir . '/src/Security.php',
     'SerializedArray' => $baseDir . '/src/output/SerializedArray.php',
     'WPAjaxRequest' => $baseDir . '/src/WPAjaxRequest.php',
-    'XML' => $baseDir . '/src/output/XML.php',
+    'XML' => $baseDir . '/src/output/xml.php',
 );
