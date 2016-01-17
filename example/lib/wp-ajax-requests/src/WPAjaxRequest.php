@@ -1,9 +1,11 @@
 <?php
 /**
  * WPAjaxRequest Simple factory
+ *
+ * @package Lucymtc\WPAjaxRequest
  */
 
-if( ! class_exists( 'WPAjaxRequest' )){
+use Lucymtc\WPAjaxRequest as WPAjax;
 
 class WPAjaxRequest {
 
@@ -89,17 +91,18 @@ class WPAjaxRequest {
 	 */
   public function build() {
 
-  	$security = new Security( $this->args['nonce'], $this->args['capability'] );
-    $data_handler = new Data( new $this->args['output']() );
+  	$security = new WPAjax\Security( $this->args['nonce'], $this->args['capability'] );
+
+    $output = 'Lucymtc\WPAjaxRequest\\' . $this->args['output'];
+    $data_handler = new WPAjax\Data( new $output() );
 
     if( $this->args['use_front'] ) {
-        $front_handler = new Front( $this->args['front_script_handle'], $this->args['front_script_src'], $this->args['localize_name']);
+        $front_handler = new WPAjax\Front( $this->args['front_script_handle'], $this->args['front_script_src'], $this->args['localize_name']);
     } else {
         $front_handler = null;
     }
 
-    return new Handler( $this->args['action'], $this->args['callback'], $security, $data_handler, $front_handler);
+    return new WPAjax\Handler( $this->args['action'], $this->args['callback'], $security, $data_handler, $front_handler);
   }
 
-}
 }

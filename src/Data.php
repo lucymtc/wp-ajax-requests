@@ -4,10 +4,10 @@
  * Handles the data.
  * Dependency on Output Interface
  *
- * @todo  add dependency of Sanitation object responsable of sanitating data
+ * @package Lucymtc\WPAjaxRequest
  */
 
-if( ! class_exists( 'Data' )){
+namespace Lucymtc\WPAjaxRequest;
 
 class Data{
 
@@ -57,7 +57,5 @@ class Data{
     }
 
 
-
-}
 
 }

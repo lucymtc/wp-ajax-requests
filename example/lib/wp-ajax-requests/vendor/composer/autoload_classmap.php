@@ -6,13 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Data' => $baseDir . '/src/Data.php',
-    'Front' => $baseDir . '/src/Front.php',
-    'Handler' => $baseDir . '/src/Handler.php',
-    'Json' => $baseDir . '/src/output/json.php',
-    'OutputInterface' => $baseDir . '/src/OutputInterface.php',
-    'Security' => $baseDir . '/src/Security.php',
-    'SerializedArray' => $baseDir . '/src/output/SerializedArray.php',
+    'Lucymtc\\WPAjaxRequest\\Data' => $baseDir . '/src/Data.php',
+    'Lucymtc\\WPAjaxRequest\\Front' => $baseDir . '/src/Front.php',
+    'Lucymtc\\WPAjaxRequest\\Handler' => $baseDir . '/src/Handler.php',
+    'Lucymtc\\WPAjaxRequest\\Json' => $baseDir . '/src/output/json.php',
+    'Lucymtc\\WPAjaxRequest\\OutputInterface' => $baseDir . '/src/OutputInterface.php',
+    'Lucymtc\\WPAjaxRequest\\Security' => $baseDir . '/src/Security.php',
+    'Lucymtc\\WPAjaxRequest\\SerializedArray' => $baseDir . '/src/output/SerializedArray.php',
+    'Lucymtc\\WPAjaxRequest\\XML' => $baseDir . '/src/output/xml.php',
     'WPAjaxRequest' => $baseDir . '/src/WPAjaxRequest.php',
-    'XML' => $baseDir . '/src/output/xml.php',
 );

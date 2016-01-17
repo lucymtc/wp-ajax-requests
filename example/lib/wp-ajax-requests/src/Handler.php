@@ -2,10 +2,11 @@
 
 /**
  * Object that will handle the request.
- * Dependencies on Security and DataHanlder.
+ *
+ * @package Lucymtc\WPAjaxRequest
  */
 
-if( ! class_exists( 'Handler' )){
+namespace Lucymtc\WPAjaxRequest;
 
 class Handler{
 
@@ -16,7 +17,13 @@ class Handler{
     public $args;
 
     /**
+     * Constructor
      *
+     * @param string   $action
+     * @param string   $callback
+     * @param Security $security
+     * @param Data     $data_handler
+     * @param Front    $front_handler
      */
     public function __construct( $action = '', $callback = '', Security $security, Data $data_handler, Front $front_handler ){
 
@@ -90,6 +97,4 @@ class Handler{
 
         if( $this->_callback === '' ) echo $this->_data_handler->load_output();
     }
-}
-
 }
