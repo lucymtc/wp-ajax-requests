@@ -1,95 +1,105 @@
 <?php
-
 /**
- * Object that will handle the request.
- * Dependencies on Security and DataHanlder.
+ * WPAjaxRequest Simple factory
  */
 
 if( ! class_exists( 'WPAjaxRequest' )){
 
-class WPAjaxRequest{
+class WPAjaxRequest {
 
-    private $_security;
-    private $_data_handler;
-    private $_front_handler;
+	public $args;
 
-    public $args;
+	/**
+	 * constructor
+	 * @param object Final WPAjaxRequest object created by the method create
+	 */
+	public function __construct( $args ) {
 
-    /**
-     *
-     */
-    public function __construct( $action = '', $callback = '', Security $security, Data $data_handler, Front $front_handler ){
+		$this->set_defaults();
+		$this->args = wp_parse_args( $args, $this->args );
 
-        $this->_action = $action;
-        $this->_callback = $callback;
-        $this->_security = $security;
-        $this->_data_handler = $data_handler;
-        $this->_front_handler = $front_handler;
+		return $this->build();
 
-        $this->add_actions();
+	}
 
-        if( $front_handler != null ) {
-            // send the nonce to the front handler for add to the list.
-            $nonce = $this->_security->get_nonce();
-            $this->_front_handler->create_nonce($nonce);
-        }
+	/**
+	 * set_defaults Set default argumens
+	 */
+	public function set_defaults(){
+
+		$this->args = array(
+
+        /**
+         * Required. The action name to create the custom handler for the wordpress hook.
+         * wp_ajax_(action), wp_ajax_nonpriv_(action)
+         */
+        'action' => '',
+
+        /**
+         * Callback function defined by the user to run if the request
+         * is valid and passes the security checks.
+         */
+        'callback' => '',
+
+        /**
+         * Action name to create the nonce wp_create_nonce().
+         * Security checks will run against this name.
+         * If left as null, the nonce verification won't take place.
+         */
+        'nonce' => null,
+
+        /**
+         * Security checks will run against this capability. For example: manage_options
+         */
+        'capability' => null,
+
+        /**
+         * Data output format. Possible values Json, SerializedArra, XML.
+         */
+        'output' => 'Json',
+
+        /**
+         * If set to false, the support for the front end will not be used.
+         * The user will need to enqueue scripts and send request manually.
+         */
+        'use_front' => true,
+
+        /**
+         * Name used as a handle for the script in wp_enqueue_script()
+         */
+        'front_script_handle' => 'wpajaxrequest-script',
+
+        /**
+         * You may replace the script responsible to send the request by changing
+         * the default path to your own script.
+         */
+        'front_script_src' => home_url( str_replace( ABSPATH, '', dirname(__DIR__) . '/js/wp-ajax-request.js') ),
+
+        /**
+         * The name of the variable which will contain the data for wp_localize_script().
+         */
+        'localize_name' => 'wpar',
+
+ 		);
+	}
+
+	/**
+	 * create
+	 * @return object Final WPAjaxRequest object
+	 */
+  public function build() {
+
+  	$security = new Security( $this->args['nonce'], $this->args['capability'] );
+    $data_handler = new Data( new $this->args['output']() );
+
+    if( $this->args['use_front'] ) {
+        $front_handler = new Front( $this->args['front_script_handle'], $this->args['front_script_src'], $this->args['localize_name']);
+    } else {
+        $front_handler = null;
     }
 
-    /**
-     * Adds actions for the callbacks and ajax requests
-     */
-    public function add_actions(){
+    return new Handler( $this->args['action'], $this->args['callback'], $security, $data_handler, $front_handler);
+  }
 
-        if( $this->_callback != '') {
-            add_action( 'wpajaxrequest_callback_' . $this->_action , $this->_callback );
-        }
-
-        if( $this->_action != '') {
-            add_action( 'wp_ajax_' . $this->_action , array( $this, 'request_handler') );
-            add_action( 'wp_ajax_nopriv_' . $this->_action , array( $this, 'request_handler') );
-        }
-
-    }
-
-    /**
-     * Calls security chheck method and fires user's callback function if success
-     * @return void
-     */
-    public function request_handler(){
-
-        if( $this->_security->check() ){
-
-            $this->do_callback();
-
-        } else {
-
-            echo $this->_security->get_error();
-        }
-
-        wp_die();
-    }
-
-
-   /**
-    * Adds the hook action to run users callback returning the data.
-    */
-    public function do_callback(){
-
-        $posted = array();
-        $data = maybe_serialize( $_POST['data'] );
-
-        if( isset( $data ) ){
-            wp_parse_str( $data, $posted );
-        }
-
-        $this->_data_handler->set_data( $posted );
-        $this->_data_handler->add_data( array('success' => true) );
-
-        // Users Callback
-        do_action('wpajaxrequest_callback_' . $this->_action, $this->_data_handler->load_output() );
-
-        if( $this->_callback === '' ) echo $this->_data_handler->load_output();
-    }
 }
-
 }
