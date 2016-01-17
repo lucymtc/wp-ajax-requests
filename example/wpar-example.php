@@ -23,7 +23,7 @@ function wparexample_add_requests() {
         'nonce'      => 'wparexample_nonce',
     );
 
-    wpar_request( $args );
+	new WPAjaxRequest( $args );
 
 }
 

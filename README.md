@@ -15,7 +15,7 @@ To get it going you need to include the file that will build the final object:
 ```
 require_once SOME_PATH . 'wp-ajax-requests/request.php';
 ```
-Then you would call the function `wpar_request()` passing in some defined areguments.
+Then you would create a new instance of WPAjaxRequest `new WPAjaxRequest()` passing in some arguments.
 For example:
 
 ```php
@@ -27,7 +27,7 @@ $args = array(
         'output'     => 'Json',
     );
 
-wpar_request( $args );
+new WPAjaxRequest( $args );
 ```
 (All arguments explained bellow).
 
@@ -63,7 +63,7 @@ myForm.on('submit', function(event){
 ```
 ### Arguments
 
-The arguments and it's defaults when calling `wpar_request()`:
+The arguments and it's defaults when calling `new WPAjaxRequest( $args );`:
 
 ```php
  $defaults = array(

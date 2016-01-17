@@ -50,7 +50,9 @@ class Front{
         wp_enqueue_script( $this->_script_handle, $this->_script_url, array('jquery'), '1.0', true );
 
         $localize_data = $this->get_localize_script_data();
-        wp_localize_script($this->_script_handle, $this->_localize_name, $localize_data);
+        if( ! empty( $localize_data ) ) {
+            wp_localize_script($this->_script_handle, $this->_localize_name, $localize_data);
+        }
 
     }
 
@@ -88,6 +90,8 @@ class Front{
             return $this->first_localize_data_setup();
 
         } else {
+
+             $localized_data = array();
 
              // Convert the localized script data in usabale data from its JSON format
             if( ! is_array( $data ) ) {
