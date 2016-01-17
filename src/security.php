@@ -1,10 +1,12 @@
 <?php
 
 /**
- * Responsable for security checks
+ * Responsable for security checks.
+ *
+ * @package Lucymtc\WPAjaxRequest
  */
 
-if( ! class_exists( 'Security' )){
+namespace Lucymtc\WPAjaxRequest;
 
 class Security{
 
@@ -19,7 +21,7 @@ class Security{
 
         $this->_nonce = $nonce;
         $this->_capability = $capability;
-        $this->_result = new stdClass();
+        $this->_result = new \stdClass();
     }
 
 
@@ -67,5 +69,4 @@ class Security{
         return $this->_nonce;
     }
 
-}
 }

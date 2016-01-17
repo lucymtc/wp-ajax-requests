@@ -3,10 +3,10 @@
 /**
  * Implementation of the Output interface
  * returns data as xml
+ * @package Lucymtc\WPAjaxRequest
  */
 
-
-if( ! class_exists( 'XML' )){
+namespace Lucymtc\WPAjaxRequest;
 
 class XML implements OutputInterface {
 
@@ -18,6 +18,4 @@ class XML implements OutputInterface {
         // $xmlResponse = new WP_Ajax_Response($data);
         // return $xmlResponse->send();
     }
-}
-
 }

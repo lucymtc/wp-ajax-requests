@@ -1,6 +1,8 @@
 <?php
 /**
- * returns the built WPAjaxRequest Objetc
+ * Autoloader
+ *
+ * @package Lucymtc\WPAjaxRequest
  */
 
 require_once 'vendor/autoload.php';
