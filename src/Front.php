@@ -2,11 +2,12 @@
 
 /**
  * Handles the front end enqueing required scripts.
- *
  * Options to set different script and enqueue key name.
+ *
+ * @package Lucymtc\WPAjaxRequest
  */
 
-if( ! class_exists( 'Front' )){
+namespace Lucymtc\WPAjaxRequest;
 
 class Front{
 
@@ -190,7 +191,3 @@ class Front{
     }
 
 }
-
-}
-
-
